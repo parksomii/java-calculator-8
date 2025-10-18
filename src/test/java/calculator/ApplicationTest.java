@@ -150,6 +150,44 @@ class ApplicationTest extends NsTest {
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
+    
+    @Test
+    @DisplayName("잘못된 커스텀 구분자 형식은 예외를 발생시킨다")
+    void 잘못된_커스텀_구분자_형식() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;\\1;2;3"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    @DisplayName("구분자가 없는 커스텀 형식은 예외를 발생시킨다")
+    void 구분자_없는_커스텀_형식() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//\\n123"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    @DisplayName("\\n이 누락된 커스텀 형식은 예외를 발생시킨다")
+    void 개행_누락_커스텀_형식() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//;123"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    @DisplayName("기본 구분자가 아닌 문자는 예외를 발생시킨다")
+    void 잘못된_기본_구분자() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("1*2*6"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
