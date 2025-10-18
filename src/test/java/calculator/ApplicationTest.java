@@ -77,6 +77,42 @@ class ApplicationTest extends NsTest {
             assertThat(output()).contains("결과 : 6");
         });
     }
+    
+    @Test
+    @DisplayName("0은 예외를 발생시킨다")
+    void 영_예외() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("0,1,2"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    @DisplayName("숫자가 아닌 값은 예외를 발생시킨다")
+    void 숫자_아닌_값_예외() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("1,a,3"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    @DisplayName("정수 범위를 초과하는 값은 예외를 발생시킨다")
+    void 정수_범위_초과() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("9999999999999,1"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
+    @Test
+    @DisplayName("소수점이 포함된 값은 예외를 발생시킨다")
+    void 소수점_포함_예외() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("1.5,2"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
     @Override
     public void runMain() {
         Application.main(new String[]{});
