@@ -2,6 +2,7 @@ package calculator;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -110,6 +111,42 @@ class ApplicationTest extends NsTest {
     void 소수점_포함_예외() {
         assertSimpleTest(() ->
                 assertThatThrownBy(() -> runException("1.5,2"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+ 
+    @Test
+    @DisplayName("점을 커스텀 구분자로 사용할 수 있다")
+    void 점_커스텀_구분자() {
+        assertSimpleTest(() -> {
+            run("//.\\n1.2.3");
+            assertThat(output()).contains("결과 : 6");
+        });
+    }
+
+    @Test
+    @DisplayName("다른 특수문자도 커스텀 구분자로 사용할 수 있다")
+    void 특수문자_커스텀_구분자() {
+        assertSimpleTest(() -> {
+            run("//@\\n1@2@3");
+            assertThat(output()).contains("결과 : 6");
+        });
+    }
+
+    @Test
+    @DisplayName("다중 문자 커스텀 구분자를 사용할 수 있다")
+    void 다중_문자_커스텀_구분자() {
+        assertSimpleTest(() -> {
+            run("//ab\\n1ab2ab3");
+            assertThat(output()).contains("결과 : 6");
+        });
+    }
+
+    @Test
+    @DisplayName("음수 기호를 커스텀 구분자로 사용할 수 없다")
+    void 음수_기호_커스텀_구분자_금지() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//-\\n-1-2-3"))
                         .isInstanceOf(IllegalArgumentException.class)
         );
     }
