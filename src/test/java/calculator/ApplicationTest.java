@@ -24,6 +24,59 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    @DisplayName("빈 문자열은 0을 반환한다")
+    void 빈_문자열_처리() {
+        assertSimpleTest(() -> {
+            run(" ");
+            assertThat(output()).contains("결과 : 0");
+        });
+    }
+
+    @Test
+    @DisplayName("기본 구분자로 쉼표를 사용한다")
+    void 기본_구분자_쉼표() {
+        assertSimpleTest(() -> {
+            run("1,2");
+            assertThat(output()).contains("결과 : 3");
+        });
+    }
+
+    @Test
+    @DisplayName("기본 구분자로 콜론을 사용한다")
+    void 기본_구분자_콜론() {
+        assertSimpleTest(() -> {
+            run("1:2");
+            assertThat(output()).contains("결과 : 3");
+        });
+    }
+
+    @Test
+    @DisplayName("기본 구분자로 쉼표와 콜론을 혼용한다")
+    void 기본_구분자_혼용() {
+        assertSimpleTest(() -> {
+            run("1,2:3");
+            assertThat(output()).contains("결과 : 6");
+        });
+    }
+
+    @Test
+    @DisplayName("빈 값은 무시한다")
+    void 빈_값_무시() {
+        assertSimpleTest(() -> {
+            run("1,,3");
+            assertThat(output()).contains("결과 : 4");
+        });
+    }
+
+    @Test
+    @DisplayName("공백이 있는 값은 trim 처리한다")
+    void 공백_trim_처리() {
+        assertSimpleTest(() -> {
+            run(" 1 , 2 , 3 ");
+            assertThat(output()).contains("결과 : 6");
+        });
+    }
     @Override
     public void runMain() {
         Application.main(new String[]{});
