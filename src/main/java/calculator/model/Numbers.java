@@ -26,10 +26,11 @@ public class Numbers {
         if (isEmptyInput) {
             // 빈 문자열인 경우 0을 반환
             this.numbers.add(0.0);
-        } else {
-            for (String numberString : numberStrings) {
-                addNumber(numberString);
-            }
+            return;
+        }
+
+        for (String numberString : numberStrings) {
+            addNumber(numberString);
         }
     }
 
