@@ -186,6 +186,7 @@
 | TC-19 | `"1*2*6"`           | 예외    | 잘못된 기본 구분자            |
 | TC-20 | `"//-\n-1-2-3"`     | 예외    | 음수 기호를 커스텀 구분자로 사용 금지 |
 | TC-21 | `"1,2.5,3"`         | `6.5`   | 정수와 실수 혼합 계산          |
+| TC-22 | `"//1\n21123"`      | 예외    | 숫자를 커스텀 구분자로 사용 금지      |
 
 ## 4. 실행 예시
 
@@ -211,13 +212,13 @@
 
 | 오류 상황         | 예외                       | 메시지 예시                           |
 |---------------|--------------------------|----------------------------------|
-| 음수 포함         | IllegalArgumentException | "양수만 입력 가능합니다: -1"               |
-| 0 포함          | IllegalArgumentException | "양수만 입력 가능합니다: 0"                |
-| 잘못된 구분자 형식    | IllegalArgumentException | "잘못된 구분자 형식입니다: //;\1;2;3"       |
-| 잘못된 기본 구분자    | IllegalArgumentException | "잘못된 구분자 형식입니다: 1*2*6"           |
-| 숫자가 아닌 값 포함   | IllegalArgumentException | "숫자만 입력 가능합니다: a"                 |
-| 정수 범위 초과      | IllegalArgumentException | "정수 범위를 초과했습니다."                 |
-| 커스텀 구분자 누락    | IllegalArgumentException | "구분자가 지정되지 않았습니다: //\n123"       |
-| \n 누락         | IllegalArgumentException | "잘못된 구분자 형식입니다: //;123"          |
-| 음수 기호 커스텀 구분자 | IllegalArgumentException | "음수 기호(-)는 커스텀 구분자로 사용할 수 없습니다." |
-| 숫자 커스텀 구분자     | IllegalArgumentException | "숫자는 커스텀 구분자로 사용할 수 없습니다."         |
+| 음수 포함         | IllegalArgumentException | "[ERROR] 양수만 입력 가능합니다: -1"               |
+| 0 포함          | IllegalArgumentException | "[ERROR] 양수만 입력 가능합니다: 0"                |
+| 잘못된 구분자 형식    | IllegalArgumentException | "[ERROR] 잘못된 구분자 형식입니다: //;\1;2;3"       |
+| 잘못된 기본 구분자    | IllegalArgumentException | "[ERROR] 잘못된 구분자 형식입니다: 1*2*6"           |
+| 숫자가 아닌 값 포함   | IllegalArgumentException | "[ERROR] 숫자만 입력 가능합니다: a"                 |
+| 정수 범위 초과      | IllegalArgumentException | "[ERROR] 정수 범위를 초과했습니다."                 |
+| 커스텀 구분자 누락    | IllegalArgumentException | "[ERROR] 구분자가 지정되지 않았습니다: //\n123"       |
+| \n 누락         | IllegalArgumentException | "[ERROR] 잘못된 구분자 형식입니다: //;123"          |
+| 음수 기호 커스텀 구분자 | IllegalArgumentException | "[ERROR] 음수 기호(-)는 커스텀 구분자로 사용할 수 없습니다." |
+| 숫자 커스텀 구분자     | IllegalArgumentException | "[ERROR] 숫자는 커스텀 구분자로 사용할 수 없습니다."         |
