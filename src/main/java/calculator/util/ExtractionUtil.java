@@ -19,15 +19,21 @@ public class ExtractionUtil {
      * @throws IllegalArgumentException 구분자 형식이 잘못되었거나 음수 기호를 구분자로 사용한 경우
      */
     public static Delimiters extractDelimiters(String input) {
-        if (input == null || input.isEmpty()) {
+        if (input == null || !input.startsWith("//")) {
             return new Delimiters();
         }
 
-        if (!input.startsWith("//")) {
-            return new Delimiters();
-        }
+        return extractCustomDelimiter(input);
+    }
 
-        // 커스텀 구분자 처리
+    /**
+     * 커스텀 구분자를 추출하는 헬퍼 메서드
+     *
+     * @param input 입력 문자열
+     * @return 커스텀 구분자를 포함한 Delimiters 객체
+     * @throws IllegalArgumentException 구분자 형식이 잘못되었거나 음수 기호를 구분자로 사용한 경우
+     */
+    private static Delimiters extractCustomDelimiter(String input) {
         String delimiterPart = extractDelimiterPart(input);
 
         if (delimiterPart.length() < 3) {
@@ -54,22 +60,44 @@ public class ExtractionUtil {
      */
     private static String extractDelimiterPart(String input) {
         if (input.contains("\\n")) {
-            String[] parts = input.split("\\\\n", 2);
-            if (parts.length != 2) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
-            }
-            return parts[0];
+            return extractDelimiterWithEscapedNewline(input);
         }
 
         if (input.contains("\n")) {
-            String[] parts = input.split("\n", 2);
-            if (parts.length != 2) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
-            }
-            return parts[0];
+            return extractDelimiterWithNewline(input);
         }
 
         throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+    }
+
+    /**
+     * 이스케이프된 개행문자로 구분자를 추출하는 헬퍼 메서드
+     *
+     * @param input 입력 문자열
+     * @return 구분자 부분 문자열
+     * @throws IllegalArgumentException 구분자 형식이 잘못된 경우
+     */
+    private static String extractDelimiterWithEscapedNewline(String input) {
+        String[] parts = input.split("\\\\n", 2);
+        if (parts.length != 2) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+        }
+        return parts[0];
+    }
+
+    /**
+     * 개행문자로 구분자를 추출하는 헬퍼 메서드
+     *
+     * @param input 입력 문자열
+     * @return 구분자 부분 문자열
+     * @throws IllegalArgumentException 구분자 형식이 잘못된 경우
+     */
+    private static String extractDelimiterWithNewline(String input) {
+        String[] parts = input.split("\n", 2);
+        if (parts.length != 2) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+        }
+        return parts[0];
     }
 
     /**
