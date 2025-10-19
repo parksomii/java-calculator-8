@@ -196,6 +196,15 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    @DisplayName("숫자를 커스텀 구분자로 사용하면 예외를 발생시킨다")
+    void 숫자_커스텀_구분자_예외() {
+        assertSimpleTest(() ->
+                assertThatThrownBy(() -> runException("//1\\n21123"))
+                        .isInstanceOf(IllegalArgumentException.class)
+        );
+    }
+
 
     @Override
     public void runMain() {
