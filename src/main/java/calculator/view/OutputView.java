@@ -11,8 +11,13 @@ public class OutputView {
      * 
      * @param result 출력할 계산 결과
      */
-    public static void printResult(int result) {
-        System.out.println("결과 : " + result);
+    public static void printResult(double result) {
+        // 정수인 경우 소수점 없이 출력, 실수인 경우 소수점 포함 출력
+        if (result == (int) result) {
+            System.out.println("결과 : " + (int) result);
+        } else {
+            System.out.println("결과 : " + result);
+        }
     }
 
     /**

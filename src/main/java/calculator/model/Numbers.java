@@ -6,12 +6,13 @@ import java.util.List;
 
 /**
  * 숫자들을 관리하는 도메인 클래스
+ * 문자열로 된 숫자들을 실수로 변환하고 검증하며, 합계를 계산하는 기능을 제공한다.
  */
 public class Numbers {
     /**
-     * 정수 숫자들을 저장하는 리스트
+     * 실수 숫자들을 저장하는 리스트
      */
-    private final List<Integer> numbers;
+    private final List<Double> numbers;
 
 
     /**
@@ -24,7 +25,7 @@ public class Numbers {
         this.numbers = new ArrayList<>();
         if (isEmptyInput) {
             // 빈 문자열인 경우 0을 반환
-            this.numbers.add(0);
+            this.numbers.add(0.0);
         } else {
             for (String numberString : numberStrings) {
                 addNumber(numberString);
@@ -33,13 +34,13 @@ public class Numbers {
     }
 
     /**
-     * 문자열을 정수로 변환하여 숫자 리스트에 추가한다.
+     * 문자열을 실수로 변환하여 숫자 리스트에 추가한다.
      *
      * @param numberString 변환할 숫자 문자열
      * @throws IllegalArgumentException 숫자가 유효하지 않은 경우
      */
     public void addNumber(String numberString) {
-        int number = parseNumber(numberString);
+        double number = parseNumber(numberString);
         validateNumber(number);
         numbers.add(number);
     }
@@ -49,33 +50,32 @@ public class Numbers {
      *
      * @return 모든 숫자들의 합계
      */
-    public int sum() {
+    public double sum() {
         return numbers.stream()
-                .mapToInt(Integer::intValue)
+                .mapToDouble(Double::doubleValue)
                 .sum();
     }
 
 
     /**
-     * 문자열을 정수로 변환하는 private 메서드 정수 범위 초과 및 소수점 포함 여부를 검증한다.
+     * 문자열을 실수로 변환하는 private 메서드
+     * 정수와 실수 모두 지원하며, 정수 범위 초과 및 유효하지 않은 숫자 형식을 검증한다.
      *
      * @param numberString 변환할 숫자 문자열
-     * @return 변환된 정수
-     * @throws IllegalArgumentException 정수 범위를 초과하거나 소수점이 포함된 경우
+     * @return 변환된 실수
+     * @throws IllegalArgumentException 정수 범위를 초과하거나 유효하지 않은 숫자 형식인 경우
      */
-    private int parseNumber(String numberString) {
+    private double parseNumber(String numberString) {
         try {
-            // 정수 범위 초과 체크
-            long longValue = Long.parseLong(numberString);
-            if (longValue > Integer.MAX_VALUE) {
+            double result = Double.parseDouble(numberString);
+            
+            // 정수 범위 초과 체크 (Integer.MAX_VALUE를 초과하는 경우)
+            if (result > Integer.MAX_VALUE) {
                 throw new IllegalArgumentException(ErrorMessage.INTEGER_OVERFLOW);
             }
-            return (int) longValue;
+            
+            return result;
         } catch (NumberFormatException e) {
-            // 소수점이 포함된 경우 (정수만 허용)
-            if (numberString.contains(".")) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER + numberString);
-            }
             throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER + numberString);
         }
     }
@@ -86,7 +86,7 @@ public class Numbers {
      * @param number 검증할 숫자
      * @throws IllegalArgumentException 숫자가 0 이하인 경우
      */
-    private void validateNumber(int number) {
+    private void validateNumber(double number) {
         if (number <= 0) {
             throw new IllegalArgumentException(ErrorMessage.NEGATIVE_NUMBER + number);
         }

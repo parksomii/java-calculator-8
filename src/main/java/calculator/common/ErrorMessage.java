@@ -10,9 +10,9 @@ public class ErrorMessage {
     public static final String NEGATIVE_NUMBER = "양수만 입력 가능합니다: ";
 
     /**
-     * 정수가 아닌 값(소수, 문자 등) 입력 시 사용되는 에러 메시지
+     * 숫자가 아닌 값(문자 등) 입력 시 사용되는 에러 메시지
      */
-    public static final String INVALID_NUMBER = "정수만 입력 가능합니다: ";
+    public static final String INVALID_NUMBER = "숫자만 입력 가능합니다: ";
 
     /**
      * 정수 범위를 초과하는 값 입력 시 사용되는 에러 메시지

@@ -18,7 +18,7 @@ public class CalculatorService {
      * @return 계산 결과 (숫자들의 합)
      * @throws IllegalArgumentException 입력이 유효하지 않은 경우
      */
-    public int calculate(String input) {
+    public double calculate(String input) {
         InputValidator.validateInput(input);
 
         Numbers numbers = createNumbersFromInput(input);

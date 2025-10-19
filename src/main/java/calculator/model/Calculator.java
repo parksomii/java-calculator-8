@@ -23,7 +23,7 @@ public class Calculator {
      *
      * @return 모든 숫자들의 합계
      */
-    public int calculate() {
+    public double calculate() {
         return numbers.sum();
     }
 }
