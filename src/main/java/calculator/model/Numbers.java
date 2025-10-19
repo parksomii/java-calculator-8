@@ -1,6 +1,7 @@
 package calculator.model;
 
 import calculator.common.ErrorMessage;
+import calculator.view.ErrorView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,12 +73,14 @@ public class Numbers {
             
             // 정수 범위 초과 체크 (Integer.MAX_VALUE를 초과하는 경우)
             if (result > Integer.MAX_VALUE) {
-                throw new IllegalArgumentException(ErrorMessage.INTEGER_OVERFLOW);
+                throw new IllegalArgumentException(
+                        ErrorView.ERROR_MESSAGE + ErrorMessage.INTEGER_OVERFLOW);
             }
             
             return result;
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_NUMBER + numberString);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_NUMBER + numberString);
         }
     }
 
@@ -89,7 +92,8 @@ public class Numbers {
      */
     private void validateNumber(double number) {
         if (number <= 0) {
-            throw new IllegalArgumentException(ErrorMessage.NEGATIVE_NUMBER + number);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.NEGATIVE_NUMBER + number);
         }
     }
 }

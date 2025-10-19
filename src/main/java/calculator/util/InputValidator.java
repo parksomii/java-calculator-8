@@ -1,6 +1,7 @@
 package calculator.util;
 
 import calculator.common.ErrorMessage;
+import calculator.view.ErrorView;
 
 /**
  * 입력 문자열의 유효성을 검증하는 유틸리티 클래스
@@ -17,7 +18,8 @@ public class InputValidator {
      */
     public static void validateInput(String input) {
         if (input == null) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + "null");
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + "null");
         }
 
         validateCustomDelimiterFormat(input);
@@ -37,13 +39,13 @@ public class InputValidator {
         }
 
         if (!input.contains("\\n") && !input.contains("\n")) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+            throw new IllegalArgumentException(ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + input);
         }
 
         String delimiterPart = extractDelimiterPartForValidation(input);
 
         if (delimiterPart.length() < 3) {
-            throw new IllegalArgumentException(ErrorMessage.MISSING_DELIMITER + input);
+            throw new IllegalArgumentException(ErrorView.ERROR_MESSAGE + ErrorMessage.MISSING_DELIMITER + input);
         }
 
     }
@@ -65,7 +67,7 @@ public class InputValidator {
 
         // 구분자가 기본 구분자(, :)만 있는지 확인
         if (!withoutNumbers.matches("^[,:]*$")) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+            throw new IllegalArgumentException(ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + input);
         }
     }
 
@@ -81,14 +83,16 @@ public class InputValidator {
         if (input.contains("\\n")) {
             String[] parts = input.split("\\\\n", 2);
             if (parts.length != 2) {
-                throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+                throw new IllegalArgumentException(
+                        ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + input);
             }
             return parts[0];
         }
 
         String[] parts = input.split("\n", 2);
         if (parts.length != 2) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + input);
         }
         return parts[0];
     }

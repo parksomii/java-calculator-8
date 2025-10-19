@@ -2,6 +2,7 @@ package calculator.util;
 
 import calculator.common.ErrorMessage;
 import calculator.model.Delimiters;
+import calculator.view.ErrorView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,19 +38,22 @@ public class ExtractionUtil {
         String delimiterPart = extractDelimiterPart(input);
 
         if (delimiterPart.length() < 3) {
-            throw new IllegalArgumentException(ErrorMessage.MISSING_DELIMITER + input);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.MISSING_DELIMITER + input);
         }
 
         String customDelimiter = delimiterPart.substring(2);
 
         // 음수 기호(-)는 커스텀 구분자로 사용할 수 없음
         if ("-".equals(customDelimiter)) {
-            throw new IllegalArgumentException(ErrorMessage.NEGATIVE_SIGN_DELIMITER_NOT_ALLOWED);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.NEGATIVE_SIGN_DELIMITER_NOT_ALLOWED);
         }
 
         // 숫자는 커스텀 구분자로 사용할 수 없음
         if (customDelimiter.matches("\\d")) {
-            throw new IllegalArgumentException(ErrorMessage.NUMERIC_DELIMITER_NOT_ALLOWED);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.NUMERIC_DELIMITER_NOT_ALLOWED);
         }
 
         return new Delimiters(customDelimiter);
@@ -72,7 +76,8 @@ public class ExtractionUtil {
             return extractDelimiterWithNewline(input);
         }
 
-        throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+        throw new IllegalArgumentException(
+                ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + input);
     }
 
     /**
@@ -85,7 +90,8 @@ public class ExtractionUtil {
     private static String extractDelimiterWithEscapedNewline(String input) {
         String[] parts = input.split("\\\\n", 2);
         if (parts.length != 2) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + input);
         }
         return parts[0];
     }
@@ -100,7 +106,8 @@ public class ExtractionUtil {
     private static String extractDelimiterWithNewline(String input) {
         String[] parts = input.split("\n", 2);
         if (parts.length != 2) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_DELIMITER_FORMAT + input);
+            throw new IllegalArgumentException(
+                    ErrorView.ERROR_MESSAGE + ErrorMessage.INVALID_DELIMITER_FORMAT + input);
         }
         return parts[0];
     }
