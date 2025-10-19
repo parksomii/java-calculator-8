@@ -107,12 +107,21 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    @DisplayName("소수점이 포함된 값은 예외를 발생시킨다")
-    void 소수점_포함_예외() {
-        assertSimpleTest(() ->
-                assertThatThrownBy(() -> runException("1.5,2"))
-                        .isInstanceOf(IllegalArgumentException.class)
-        );
+    @DisplayName("소수점이 포함된 값도 계산할 수 있다")
+    void 소수점_포함_계산() {
+        assertSimpleTest(() -> {
+            run("1.5,2");
+            assertThat(output()).contains("결과 : 3.5");
+        });
+    }
+
+    @Test
+    @DisplayName("정수와 실수를 혼합하여 계산할 수 있다")
+    void 정수_실수_혼합_계산() {
+        assertSimpleTest(() -> {
+            run("1,2.5,3");
+            assertThat(output()).contains("결과 : 6.5");
+        });
     }
  
     @Test
