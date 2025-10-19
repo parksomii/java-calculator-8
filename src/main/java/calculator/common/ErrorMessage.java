@@ -35,6 +35,11 @@ public class ErrorMessage {
     public static final String NEGATIVE_SIGN_DELIMITER_NOT_ALLOWED = "음수 기호(-)는 커스텀 구분자로 사용할 수 없습니다.";
 
     /**
+     * 숫자를 커스텀 구분자로 사용할 때 사용되는 에러 메시지
+     */
+    public static final String NUMERIC_DELIMITER_NOT_ALLOWED = "숫자는 커스텀 구분자로 사용할 수 없습니다.";
+
+    /**
      * 유틸리티 클래스이므로 인스턴스 생성을 방지하기 위한 private 생성자
      */
     private ErrorMessage() {

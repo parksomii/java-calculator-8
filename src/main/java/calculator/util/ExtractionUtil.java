@@ -47,6 +47,11 @@ public class ExtractionUtil {
             throw new IllegalArgumentException(ErrorMessage.NEGATIVE_SIGN_DELIMITER_NOT_ALLOWED);
         }
 
+        // 숫자는 커스텀 구분자로 사용할 수 없음
+        if (customDelimiter.matches("\\d")) {
+            throw new IllegalArgumentException(ErrorMessage.NUMERIC_DELIMITER_NOT_ALLOWED);
+        }
+
         return new Delimiters(customDelimiter);
     }
 
