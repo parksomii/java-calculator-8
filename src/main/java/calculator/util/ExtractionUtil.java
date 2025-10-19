@@ -36,14 +36,35 @@ public class ExtractionUtil {
      */
     private static Delimiters extractCustomDelimiter(String input) {
         String delimiterPart = extractDelimiterPart(input);
+        validateDelimiterPart(delimiterPart, input);
 
+        String customDelimiter = delimiterPart.substring(2);
+        validateCustomDelimiter(customDelimiter);
+
+        return new Delimiters(customDelimiter);
+    }
+
+    /**
+     * 구분자 부분의 유효성을 검증하는 헬퍼 메서드
+     *
+     * @param delimiterPart 구분자 부분 문자열
+     * @param input         원본 입력 문자열
+     * @throws IllegalArgumentException 구분자 부분이 유효하지 않은 경우
+     */
+    private static void validateDelimiterPart(String delimiterPart, String input) {
         if (delimiterPart.length() < 3) {
             throw new IllegalArgumentException(
                     ErrorView.ERROR_MESSAGE + ErrorMessage.MISSING_DELIMITER + input);
         }
+    }
 
-        String customDelimiter = delimiterPart.substring(2);
-
+    /**
+     * 커스텀 구분자의 유효성을 검증하는 헬퍼 메서드
+     *
+     * @param customDelimiter 검증할 커스텀 구분자
+     * @throws IllegalArgumentException 구분자가 유효하지 않은 경우
+     */
+    private static void validateCustomDelimiter(String customDelimiter) {
         // 음수 기호(-)는 커스텀 구분자로 사용할 수 없음
         if ("-".equals(customDelimiter)) {
             throw new IllegalArgumentException(
@@ -55,8 +76,6 @@ public class ExtractionUtil {
             throw new IllegalArgumentException(
                     ErrorView.ERROR_MESSAGE + ErrorMessage.NUMERIC_DELIMITER_NOT_ALLOWED);
         }
-
-        return new Delimiters(customDelimiter);
     }
 
     /**
