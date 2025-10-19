@@ -15,9 +15,10 @@ public class OutputView {
         // 정수인 경우 소수점 없이 출력, 실수인 경우 소수점 포함 출력
         if (result == (int) result) {
             System.out.println("결과 : " + (int) result);
-        } else {
-            System.out.println("결과 : " + result);
+            return;
         }
+
+        System.out.println("결과 : " + result);
     }
 
     /**
